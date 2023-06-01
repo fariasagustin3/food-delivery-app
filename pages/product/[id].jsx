@@ -2,8 +2,8 @@ import axios from "axios";
 import styles from "../../styles/Product.module.css";
 import Image from "next/image";
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { addProduct } from '../../redux/cartSlice';
+import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/cartSlice";
 
 const Product = ({ pizza }) => {
   const [price, setPrice] = useState(pizza.prices[0]);
@@ -13,29 +13,29 @@ const Product = ({ pizza }) => {
   const dispatch = useDispatch();
 
   const changePrice = (number) => {
-    setPrice(price + number)
-  }
+    setPrice(price + number);
+  };
 
   const handleSize = (sizeIndex) => {
     const difference = pizza.prices[sizeIndex] - pizza.prices[size];
     setSize(sizeIndex);
-    changePrice(difference)
-  }
+    changePrice(difference);
+  };
 
   const handleChange = (e, option) => {
     const checked = e.target.checked;
 
-    if(checked) {
+    if (checked) {
       changePrice(option.price);
       setExtras((prev) => [...prev, option]);
     } else {
       changePrice(-option.price);
       setExtras(extras.filter((extra) => extra._id !== option._id));
     }
-  }
+  };
 
   const handleClick = () => {
-    dispatch(addProduct({...pizza, extras, price, quantity}))
+    dispatch(addProduct({ ...pizza, extras, price, quantity }));
   };
 
   return (
@@ -80,8 +80,15 @@ const Product = ({ pizza }) => {
           ))}
         </div>
         <div className={styles.add}>
-            <input onChange={(e) => setQuantity(e.target.value)} type="number" defaultValue={1} className={styles.quantity}/>
-            <button className={styles.button} onClick={handleClick}>Add to Cart</button>
+          <input
+            onChange={(e) => setQuantity(e.target.value)}
+            type="number"
+            defaultValue={1}
+            className={styles.quantity}
+          />
+          <button className={styles.button} onClick={handleClick}>
+            Add to Cart
+          </button>
         </div>
       </div>
     </div>
@@ -89,13 +96,15 @@ const Product = ({ pizza }) => {
 };
 
 export const getServerSideProps = async ({ params }) => {
-  const res = await axios.get(`http://localhost:3000/api/products/${params.id}`);
+  const res = await axios.get(
+    `https://food-delivery-app-rho.vercel.app/api/products/${params.id}`
+  );
 
   return {
     props: {
       pizza: res.data,
-    }
-  }
-}
+    },
+  };
+};
 
 export default Product;
