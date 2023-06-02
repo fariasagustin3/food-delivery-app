@@ -45,10 +45,7 @@ const Add = ({ setClose }) => {
         img: url,
       };
 
-      await axios.post(
-        "https://food-delivery-app-rho.vercel.app/api/products",
-        newProduct
-      );
+      await axios.post("http://localhost:3000/api/products", newProduct);
       setClose(true);
     } catch (err) {
       console.log(err);
