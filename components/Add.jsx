@@ -45,10 +45,7 @@ const Add = ({ setClose }) => {
         img: url,
       };
 
-      await axios.post(
-        "https://food-delivery-app-alpha.vercel.app/api/products",
-        newProduct
-      );
+      await axios.post("https://pizzagus.vercel.app//api/products", newProduct);
       setClose(true);
     } catch (err) {
       console.log(err);
